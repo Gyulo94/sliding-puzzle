@@ -6,12 +6,17 @@ let tileSize = 0;
 
 const boardEl = document.getElementById("board");
 const upload = document.getElementById("upload");
+const guide = document.getElementById("guide");
 
 upload.addEventListener("change", (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.onload = (event) => {
     image.src = event.target.result;
+    guide.textContent =
+      "이미지가 선택되었습니다. 시작 버튼을 눌러서 게임을 시작하세요";
+    guide.classList.remove("text-gray-600");
+    guide.classList.add("text-green-600");
   };
   reader.readAsDataURL(file);
 });

@@ -9,12 +9,22 @@
   <body
     class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen flex flex-col items-center p-6"
   >
-    <h1 class="text-3xl font-bold mb-6 text-gray-700">슬라이딩 퍼즐</h1>
+    <h1 class="text-3xl font-bold mb-2 text-gray-700">슬라이딩 퍼즐</h1>
+    <p id="guide" class="text-sm text-gray-600 mb-6 font-medium">
+      이미지를 선택해주세요
+    </p>
 
     <div
       class="w-[90vw] max-w-[800px] flex justify-between bg-white/70 backdrop-blur-lg shadow-xl rounded-2xl p-4 flex gap-3 mb-6"
     >
-      <input type="file" id="upload" accept="image/*" class="text-sm" />
+      <label for="upload" class="cursor-pointer">
+        <div
+          class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-4 py-1 rounded-lg shadow hover:scale-105 transition inline-block"
+        >
+          이미지 선택
+        </div>
+      </label>
+      <input type="file" id="upload" accept="image/*" style="display: none" />
       <div class="flex items-center gap-3">
         <select id="size" class="border rounded-lg px-2 py-1">
           <option value="3" selected>3 x 3</option>
