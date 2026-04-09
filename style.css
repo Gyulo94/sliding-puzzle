@@ -1,0 +1,44 @@
+#board {
+  position: relative;
+}
+
+.tile {
+  position: absolute;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  border: 3px solid white;
+
+  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tile:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)))
+      rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none;
+  }
+}

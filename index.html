@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>슬라이딩 퍼즐</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body
+    class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen flex flex-col items-center p-6"
+  >
+    <h1 class="text-3xl font-bold mb-6 text-gray-700">슬라이딩 퍼즐</h1>
+
+    <div
+      class="w-[90vw] max-w-[800px] flex justify-between bg-white/70 backdrop-blur-lg shadow-xl rounded-2xl p-4 flex gap-3 mb-6"
+    >
+      <input type="file" id="upload" accept="image/*" class="text-sm" />
+      <div class="flex items-center gap-3">
+        <select id="size" class="border rounded-lg px-2 py-1">
+          <option value="3" selected>3 x 3</option>
+          <option value="4">4 x 4</option>
+          <option value="5">5 x 5</option>
+        </select>
+
+        <button
+          onclick="initGame()"
+          class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-4 py-1 rounded-lg shadow hover:scale-105 transition"
+        >
+          시작
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="board"
+      class="w-[90vw] max-w-[800px] aspect-square bg-white rounded-2xl shadow-2xl"
+    ></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
