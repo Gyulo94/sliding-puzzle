@@ -19,7 +19,6 @@ export const dom = {
   endPenaltyScoreEl: document.getElementById("endPenaltyScore"),
   endHintsEl: document.getElementById("endHints"),
   endTotalScoreEl: document.getElementById("endTotalScore"),
-  endTop5ListEl: document.getElementById("endTop5List"),
   endSelectDifficultyBtnEl: document.getElementById("endSelectDifficultyBtn"),
   endViewRankingBtnEl: document.getElementById("endViewRankingBtn"),
   difficultyButtons: document.querySelectorAll(".difficulty-btn"),

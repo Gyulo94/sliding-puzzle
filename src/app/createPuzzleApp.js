@@ -314,9 +314,7 @@ export function createPuzzleApp() {
     return list[randomIndex];
   }
 
-  async function loadEndTop3AndMyRank(difficulty, scoreId) {
-    dom.endTop5ListEl.innerHTML =
-      '<div class="ranking-empty">불러오는 중...</div>';
+  async function loadEndMyRank(difficulty, scoreId) {
     dom.endMyRankEl.innerHTML = "내 순위: <strong>계산 중...</strong>";
 
     try {
@@ -325,19 +323,11 @@ export function createPuzzleApp() {
         scoreId,
       });
 
-      renderTop5Into(
-        dom.endTop5ListEl,
-        (data.items || []).slice(0, 3),
-        state.currentUser?.id,
-        formatTime,
-      );
-
       dom.endMyRankEl.innerHTML =
         data.myRank && Number.isFinite(data.myRank)
           ? `내 순위: <strong>${data.myRank}등</strong>`
           : "내 순위: <strong>확인 불가</strong>";
     } catch (error) {
-      dom.endTop5ListEl.innerHTML = `<div class="ranking-empty">${error.message}</div>`;
       dom.endMyRankEl.innerHTML = "내 순위: <strong>확인 불가</strong>";
     }
   }
@@ -381,7 +371,7 @@ export function createPuzzleApp() {
 
         setTimeout(() => {
           dom.scoringModalEl.classList.add("hidden");
-          loadEndTop3AndMyRank(state.size, savedScoreId);
+          loadEndMyRank(state.size, savedScoreId);
           openGameEndOverlay();
         }, END_PANEL_DELAY_MS);
       };
@@ -481,7 +471,7 @@ export function createPuzzleApp() {
 
   async function loadRanking(difficulty, page = rankingPage) {
     dom.rankingListEl.innerHTML =
-      '<div class="ranking-empty">불러오는 중...</div>';
+      '<div class="py-[18px] text-center text-[var(--text-muted)]">불러오는 중...</div>';
     try {
       const data = await fetchRanking(difficulty, {
         page,
@@ -496,7 +486,7 @@ export function createPuzzleApp() {
       rankingPage = 1;
       rankingTotalPages = 1;
       updateRankingPaginationUI();
-      dom.rankingListEl.innerHTML = `<div class="ranking-empty">${error.message}</div>`;
+      dom.rankingListEl.innerHTML = `<div class="py-[18px] text-center text-[var(--text-muted)]">${error.message}</div>`;
     }
   }
 
