@@ -1,4 +1,4 @@
-import { api, isAxiosError } from "./api";
+import { api, isAxiosError } from "./axios";
 
 function resolveErrorMessage(error, fallbackMessage) {
   if (isAxiosError(error)) {
