@@ -2,50 +2,424 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>슬라이딩 퍼즐</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body
-    class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen flex flex-col items-center p-6"
+    class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 h-[100dvh] overflow-hidden"
   >
-    <h1 class="text-3xl font-bold mb-2 text-gray-700">슬라이딩 퍼즐</h1>
-    <p id="guide" class="text-sm text-gray-600 mb-6 font-medium">
-      이미지를 선택해주세요
-    </p>
-
     <div
-      class="w-[90vw] max-w-[800px] flex justify-between bg-white/70 backdrop-blur-lg shadow-xl rounded-2xl p-4 flex gap-3 mb-6"
+      id="authOverlay"
+      class="auth-overlay fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <label for="upload" class="cursor-pointer">
-        <div
-          class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-4 py-1 rounded-lg shadow hover:scale-105 transition inline-block"
+      <div class="auth-card w-full max-w-[420px] rounded-3xl p-5 sm:p-6">
+        <h1
+          class="auth-title text-center text-2xl sm:text-3xl font-extrabold mb-2"
         >
-          이미지 선택
-        </div>
-      </label>
-      <input type="file" id="upload" accept="image/*" style="display: none" />
-      <div class="flex items-center gap-3">
-        <select id="size" class="border rounded-lg px-2 py-1">
-          <option value="3" selected>3 x 3</option>
-          <option value="4">4 x 4</option>
-          <option value="5">5 x 5</option>
-        </select>
+          슬라이딩 퍼즐
+        </h1>
+        <p class="auth-subtitle text-center text-sm sm:text-base mb-5">
+          로그인 후 게임을 시작하세요
+        </p>
 
-        <button
-          onclick="initGame()"
-          class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-4 py-1 rounded-lg shadow hover:scale-105 transition"
-        >
-          시작
-        </button>
+        <form id="loginForm" class="space-y-3">
+          <input
+            id="loginId"
+            type="text"
+            placeholder="아이디"
+            class="auth-input"
+            required
+          />
+          <input
+            id="loginPw"
+            type="password"
+            placeholder="비밀번호"
+            class="auth-input"
+            required
+          />
+          <button type="submit" class="auth-btn mt-1">로그인</button>
+          <button id="goSignup" type="button" class="auth-link">
+            회원가입
+          </button>
+        </form>
+
+        <form id="signupForm" class="space-y-3 hidden">
+          <input
+            id="signupId"
+            type="text"
+            placeholder="아이디"
+            class="auth-input"
+            required
+          />
+          <input
+            id="signupName"
+            type="text"
+            placeholder="이름"
+            class="auth-input"
+            required
+          />
+          <input
+            id="signupPw"
+            type="password"
+            placeholder="비밀번호"
+            class="auth-input"
+            required
+          />
+          <button type="submit" class="auth-btn mt-1">회원가입</button>
+          <button id="goLogin" type="button" class="auth-link">
+            로그인 화면으로
+          </button>
+        </form>
+
+        <p
+          id="authMessage"
+          class="auth-message mt-4 text-center text-red-500 font-semibold"
+        ></p>
       </div>
     </div>
 
-    <div
-      id="board"
-      class="w-[90vw] max-w-[800px] aspect-square bg-white rounded-2xl shadow-2xl"
-    ></div>
+    <section id="difficultyOverlay" class="difficulty-overlay hidden">
+      <div class="difficulty-card rounded-3xl p-6 sm:p-7 w-full max-w-[460px]">
+        <h2
+          class="difficulty-title text-center text-2xl sm:text-3xl font-extrabold"
+        >
+          난이도 선택
+        </h2>
+        <p
+          class="difficulty-subtitle text-center mt-2 mb-5 text-sm sm:text-base"
+        >
+          원하는 난이도로 게임을 시작하세요
+        </p>
+        <div class="flex flex-col gap-3">
+          <button type="button" class="difficulty-btn" data-size="3">
+            초급 (3 x 3)
+          </button>
+          <button type="button" class="difficulty-btn" data-size="4">
+            중급 (4 x 4)
+          </button>
+          <button type="button" class="difficulty-btn" data-size="5">
+            고급 (5 x 5)
+          </button>
+        </div>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="imageModeOverlay" class="difficulty-overlay hidden">
+      <div class="difficulty-card rounded-3xl p-6 sm:p-7 w-full max-w-[520px]">
+        <h2
+          class="difficulty-title text-center text-2xl sm:text-3xl font-extrabold"
+        >
+          이미지 선택 방식
+        </h2>
+        <p
+          class="difficulty-subtitle text-center mt-2 mb-5 text-sm sm:text-base"
+        >
+          원하는 방식을 선택하세요
+        </p>
+        <div class="flex flex-col gap-3">
+          <button id="chooseUploadBtn" type="button" class="difficulty-btn">
+            이미지 업로드
+          </button>
+          <button id="chooseRandomBtn" type="button" class="difficulty-btn">
+            랜덤 이미지 선택
+          </button>
+          <button
+            id="chooseDifficultyAgainBtn"
+            type="button"
+            class="difficulty-btn"
+          >
+            난이도 다시 선택
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="gameEndOverlay" class="difficulty-overlay hidden">
+      <div class="difficulty-card rounded-3xl p-6 sm:p-7 w-full max-w-[520px]">
+        <h2
+          class="difficulty-title text-center text-2xl sm:text-3xl font-extrabold"
+        >
+          게임 완료
+        </h2>
+        <p
+          id="endMyRank"
+          class="difficulty-subtitle text-center mt-2 text-sm sm:text-base"
+        >
+          내 순위: -
+        </p>
+
+        <p
+          id="endSummary"
+          class="difficulty-subtitle text-center mt-2 mb-4 text-sm sm:text-base"
+        >
+          내 점수: 0점
+        </p>
+
+        <div class="end-score-grid rounded-2xl p-4 mb-4">
+          <div class="end-score-item">
+            <span class="end-score-label">난이도</span>
+            <span id="endDifficulty" class="end-score-value">-</span>
+          </div>
+          <div class="end-score-item">
+            <span class="end-score-label">시간</span>
+            <span id="endTime" class="end-score-value">00:00</span>
+          </div>
+          <div class="end-score-item">
+            <span class="end-score-label">이동 횟수</span>
+            <span id="endMovePenalty" class="end-score-value">0회</span>
+          </div>
+          <div class="end-score-item">
+            <span class="end-score-label">가산점</span>
+            <span id="endBonusScore" class="end-score-value">+0점</span>
+          </div>
+          <div class="end-score-item">
+            <span class="end-score-label">총 감점</span>
+            <span id="endPenaltyScore" class="end-score-value">-0점</span>
+          </div>
+          <div class="end-score-item">
+            <span class="end-score-label">힌트 사용</span>
+            <span id="endHints" class="end-score-value">0회</span>
+          </div>
+          <div class="end-score-item end-score-item-wide">
+            <span class="end-score-label">최종점수</span>
+            <span id="endTotalScore" class="end-score-value">0점</span>
+          </div>
+        </div>
+
+        <div class="end-top5-box rounded-2xl p-4 mb-5">
+          <p class="ranking-label font-bold mb-2">상위 TOP 3</p>
+          <div id="endTop5List" class="ranking-list"></div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <button
+            id="endSelectDifficultyBtn"
+            type="button"
+            class="difficulty-btn"
+          >
+            난이도 선택
+          </button>
+          <button id="endViewRankingBtn" type="button" class="difficulty-btn">
+            점수 보기
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <main
+      id="appRoot"
+      class="h-full w-full max-w-[1200px] mx-auto px-3 sm:px-6 py-3 sm:py-5 flex flex-col gap-3 sm:gap-4"
+    >
+      <header
+        id="topCard"
+        class="mx-auto shrink-0 rounded-3xl bg-white/80 backdrop-blur-md border border-amber-200 shadow-[0_10px_30px_rgba(120,53,15,0.12)] px-3 sm:px-5 py-4 sm:py-5"
+      >
+        <div class="flex justify-center mb-3 sm:mb-4">
+          <div id="sizeChip" class="rounded-2xl px-5 py-2 shadow-sm">
+            <p
+              id="sizeLabel"
+              class="stat-value text-[clamp(1.2rem,5vw,1.7rem)] font-extrabold leading-none"
+            >
+              4 x 4
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="stat-card text-center rounded-2xl py-4 sm:py-4">
+            <p
+              class="stat-title text-[clamp(1rem,4.8vw,1.25rem)] font-semibold"
+            >
+              시간
+            </p>
+            <p
+              id="timeValue"
+              class="stat-value text-[clamp(2.3rem,9.4vw,3.4rem)] leading-none font-black mt-2"
+            >
+              00:00
+            </p>
+          </div>
+          <div class="stat-card text-center rounded-2xl py-4 sm:py-4">
+            <p
+              class="stat-title text-[clamp(1rem,4.8vw,1.25rem)] font-semibold"
+            >
+              이동
+            </p>
+            <p
+              id="moveCount"
+              class="stat-value text-[clamp(2.3rem,9.4vw,3.4rem)] leading-none font-black mt-2"
+            >
+              0
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <section
+        id="game-area"
+        class="flex-1 min-h-0 flex items-center justify-center"
+      >
+        <div
+          id="board"
+          class="bg-[#9f561c] rounded-[20px] shadow-[0_10px_22px_rgba(97,54,20,0.34)]"
+        ></div>
+      </section>
+
+      <footer
+        id="bottomCard"
+        class="mx-auto shrink-0 rounded-3xl bg-white/80 backdrop-blur-md border border-amber-200 shadow-[0_8px_24px_rgba(120,53,15,0.1)] px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] sm:py-4"
+      >
+        <div class="flex items-center justify-center gap-5 sm:gap-4">
+          <button
+            id="backBtn"
+            type="button"
+            title="뒤로가기"
+            aria-label="뒤로가기"
+            class="icon-btn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
+              <path
+                d="M15 18l-6-6 6-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            id="themeBtn"
+            type="button"
+            title="테마 변경"
+            aria-label="테마 변경"
+            class="icon-btn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
+              <path
+                d="M12 3a9 9 0 1 0 9 9c0-.7-.1-1.4-.2-2A7 7 0 0 1 12 3z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="7.5" cy="12" r="1" fill="currentColor" />
+              <circle cx="10" cy="8" r="1" fill="currentColor" />
+              <circle cx="14" cy="7" r="1" fill="currentColor" />
+            </svg>
+          </button>
+          <button
+            id="restartBtn"
+            type="button"
+            title="다시시작"
+            aria-label="다시시작"
+            class="icon-btn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
+              <path
+                d="M20 12a8 8 0 1 1-2.3-5.7 M20 4v5h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            id="hintBtn"
+            type="button"
+            title="힌트"
+            aria-label="힌트"
+            class="icon-btn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
+              <path
+                d="M12 3a6 6 0 0 0-3.8 10.6c.8.7 1.3 1.6 1.3 2.6h5c0-1 .5-1.9 1.3-2.6A6 6 0 0 0 12 3z M10 20h4 M10.5 17h3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </footer>
+
+      <section
+        id="rankingPanel"
+        class="ranking-panel hidden"
+        aria-live="polite"
+      >
+        <div class="ranking-card rounded-2xl p-4 sm:p-5">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <h2 class="ranking-title text-lg sm:text-xl font-extrabold">
+              랭킹
+            </h2>
+            <div class="flex items-center gap-2">
+              <button
+                id="refreshRankingBtn"
+                type="button"
+                class="ranking-close"
+                aria-label="랭킹 새로고침"
+              >
+                새로고침
+              </button>
+              <button
+                id="backToEndPanelBtn"
+                type="button"
+                class="ranking-close"
+                aria-label="점수패널로 돌아가기"
+              >
+                점수패널
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <label for="rankingDifficulty" class="ranking-label">난이도</label>
+            <select
+              id="rankingDifficulty"
+              class="difficulty-select rounded-xl px-2 py-1 text-sm font-semibold"
+            >
+              <option value="3">초급 (3x3)</option>
+              <option value="4" selected>중급 (4x4)</option>
+              <option value="5">고급 (5x5)</option>
+            </select>
+          </div>
+          <div id="rankingList" class="ranking-list"></div>
+          <div class="flex items-center justify-between mt-3 gap-2">
+            <button
+              id="rankingPrevBtn"
+              type="button"
+              class="ranking-close"
+              aria-label="이전 페이지"
+            >
+              이전
+            </button>
+            <p id="rankingPageText" class="ranking-label text-sm font-semibold">
+              1 / 1
+            </p>
+            <button
+              id="rankingNextBtn"
+              type="button"
+              class="ranking-close"
+              aria-label="다음 페이지"
+            >
+              다음
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <input type="file" id="upload" accept="image/*" style="display: none" />
+    </main>
+
+    <script type="module" src="/src/index.js"></script>
   </body>
 </html>
