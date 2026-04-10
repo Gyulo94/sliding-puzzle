@@ -685,12 +685,6 @@ export function createPuzzleApp() {
       reader.readAsDataURL(file);
     });
 
-    dom.rankingPanelEl.addEventListener("click", (event) => {
-      if (event.target === dom.rankingPanelEl) {
-        closeRankingPanel();
-      }
-    });
-
     window.addEventListener("keydown", (event) => {
       if (
         event.key === "Escape" &&
