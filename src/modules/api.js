@@ -2,23 +2,29 @@ import { api, isAxiosError } from "./axios";
 
 function resolveErrorMessage(error, fallbackMessage) {
   if (isAxiosError(error)) {
-    return error.response?.data?.message || fallbackMessage;
+    if (error.code === "ECONNABORTED") {
+      return "요청 시간이 초과됐습니다. 다시 시도해주세요";
+    }
+    if (!error.response) {
+      return "서버에 연결할 수 없습니다. 네트워크를 확인해주세요";
+    }
+    const data = error.response.data;
+    if (!data || typeof data !== "object") {
+      return `서버 오류가 발생했습니다 (${error.response.status})`;
+    }
+    return data.message || fallbackMessage;
   }
 
   return fallbackMessage;
 }
 
-async function postJson(path, payload) {
+export async function postAuth(path, payload) {
   try {
     const { data } = await api.post(path, payload);
     return data ?? {};
   } catch (error) {
     throw new Error(resolveErrorMessage(error, "요청 처리에 실패했습니다"));
   }
-}
-
-export function postAuth(path, payload) {
-  return postJson(path, payload);
 }
 
 export async function fetchMe(accessToken) {
