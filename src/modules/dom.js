@@ -53,4 +53,5 @@ export const dom = {
   rankingPrevBtnEl: document.getElementById("rankingPrevBtn"),
   rankingNextBtnEl: document.getElementById("rankingNextBtn"),
   rankingPageTextEl: document.getElementById("rankingPageText"),
+  scoringModalEl: document.getElementById("scoringModal"),
 };

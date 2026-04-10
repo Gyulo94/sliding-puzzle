@@ -30,7 +30,7 @@ import {
 } from "../ui/boardView.js";
 import { renderTop5Into } from "../ui/rankingView.js";
 
-const END_PANEL_DELAY_MS = 3000;
+const END_PANEL_DELAY_MS = 1200;
 const ACCESS_TOKEN_STORAGE_KEY = "accessToken";
 const THEME_INDEX_STORAGE_KEY = "themeIndex";
 const RANKING_PAGE_SIZE = 10;
@@ -377,8 +377,10 @@ export function createPuzzleApp() {
       const showEndPanel = (displayScore, savedScoreId = null) => {
         showEndSummary(displayScore);
         fillEndScoreDetails(displayScore);
+        dom.scoringModalEl.classList.remove("hidden");
 
         setTimeout(() => {
+          dom.scoringModalEl.classList.add("hidden");
           loadEndTop3AndMyRank(state.size, savedScoreId);
           openGameEndOverlay();
         }, END_PANEL_DELAY_MS);
@@ -627,6 +629,7 @@ export function createPuzzleApp() {
         return;
       }
 
+      setAuthMessage("처리 중...");
       postAuth("/api/signup", { id, name, password: pw })
         .then((data) => {
           dom.signupIdEl.value = "";
@@ -651,6 +654,7 @@ export function createPuzzleApp() {
         return;
       }
 
+      setAuthMessage("로그인 중...");
       postAuth("/api/login", { id, password: pw })
         .then((data) => {
           if (data.accessToken) {
