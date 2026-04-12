@@ -33,7 +33,7 @@ import { renderTop5Into } from "../ui/rankingView.js";
 const END_PANEL_DELAY_MS = 1200;
 const ACCESS_TOKEN_STORAGE_KEY = "accessToken";
 const THEME_INDEX_STORAGE_KEY = "themeIndex";
-const RANKING_PAGE_SIZE = 10;
+const RANKING_PAGE_SIZE = 5;
 
 export function createPuzzleApp() {
   const state = createGameState();
@@ -211,8 +211,12 @@ export function createPuzzleApp() {
     return candidate;
   }
 
-  function showEndSummary(score) {
-    dom.endSummaryEl.innerHTML = `내 점수: <strong>${score.toLocaleString("ko-KR")}점</strong>`;
+  function showEndSummary(score, isNewRecord = false) {
+    const scoreText = `내 점수: <strong>${score.toLocaleString("ko-KR")}점</strong>`;
+    const messageText = isNewRecord
+      ? "<br><span style='color: var(--button-border); font-weight: bold;'>🎉 최고 기록을 달성했어요! 축하합니다!</span>"
+      : "<br><span style='color: var(--text-muted);'>조금 더 노력하면 최고 기록을 깰 수 있어요! 화이팅!</span>";
+    dom.endSummaryEl.innerHTML = scoreText + messageText;
   }
 
   function fillEndScoreDetails(scoreOverride = null) {
@@ -315,7 +319,7 @@ export function createPuzzleApp() {
   }
 
   async function loadEndMyRank(difficulty, scoreId) {
-    dom.endMyRankEl.innerHTML = "내 순위: <strong>계산 중...</strong>";
+    dom.endMyRankEl.innerHTML = "내 최고 순위: <strong>계산 중...</strong>";
 
     try {
       const data = await fetchRanking(difficulty, {
@@ -325,10 +329,10 @@ export function createPuzzleApp() {
 
       dom.endMyRankEl.innerHTML =
         data.myRank && Number.isFinite(data.myRank)
-          ? `내 순위: <strong>${data.myRank}등</strong>`
-          : "내 순위: <strong>확인 불가</strong>";
+          ? `내 최고 순위: <strong>${data.myRank}등</strong>`
+          : "내 최고 순위: <strong>확인 불가</strong>";
     } catch (error) {
-      dom.endMyRankEl.innerHTML = "내 순위: <strong>확인 불가</strong>";
+      dom.endMyRankEl.innerHTML = "내 최고 순위: <strong>확인 불가</strong>";
     }
   }
 
@@ -364,8 +368,12 @@ export function createPuzzleApp() {
         hints: state.hintCount,
       };
 
-      const showEndPanel = (displayScore, savedScoreId = null) => {
-        showEndSummary(displayScore);
+      const showEndPanel = (
+        displayScore,
+        savedScoreId = null,
+        isNewRecord = false,
+      ) => {
+        showEndSummary(displayScore, isNewRecord);
         fillEndScoreDetails(displayScore);
         dom.scoringModalEl.classList.remove("hidden");
 
@@ -383,13 +391,14 @@ export function createPuzzleApp() {
             const displayScore = Number.isFinite(savedScore)
               ? savedScore
               : localScore;
-            showEndPanel(displayScore, result?.scoreId ?? null);
+            const isNewRecord = Boolean(result?.rankingUpdated);
+            showEndPanel(displayScore, result?.scoreId ?? null, isNewRecord);
           })
           .catch(() => {
-            showEndPanel(localScore, null);
+            showEndPanel(localScore, null, false);
           });
       } else {
-        showEndPanel(localScore, null);
+        showEndPanel(localScore, null, false);
       }
     }, 350);
   }
@@ -460,7 +469,14 @@ export function createPuzzleApp() {
   }
 
   function renderRanking(items) {
-    renderTop5Into(dom.rankingListEl, items, state.currentUser?.id, formatTime);
+    const startRank = (rankingPage - 1) * RANKING_PAGE_SIZE + 1;
+    renderTop5Into(
+      dom.rankingListEl,
+      items,
+      state.currentUser?.id,
+      formatTime,
+      startRank,
+    );
   }
 
   function updateRankingPaginationUI() {

@@ -1,4 +1,10 @@
-export function renderTop5Into(containerEl, items, currentUserId, formatTime) {
+export function renderTop5Into(
+  containerEl,
+  items,
+  currentUserId,
+  formatTime,
+  startRank = 1,
+) {
   containerEl.innerHTML = "";
 
   if (!items || items.length === 0) {
@@ -9,7 +15,7 @@ export function renderTop5Into(containerEl, items, currentUserId, formatTime) {
     return;
   }
 
-  items.slice(0, 5).forEach((row, idx) => {
+  items.forEach((row, idx) => {
     const item = document.createElement("div");
     item.className =
       "grid grid-cols-[34px_1fr_auto] items-center gap-[10px] rounded-xl border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-3 py-[10px]";
@@ -22,7 +28,7 @@ export function renderTop5Into(containerEl, items, currentUserId, formatTime) {
 
     const rank = document.createElement("div");
     rank.className = "text-[15px] font-black text-[var(--text-muted)]";
-    rank.textContent = `#${idx + 1}`;
+    rank.textContent = `#${startRank + idx}`;
 
     const info = document.createElement("div");
     const title = document.createElement("div");
