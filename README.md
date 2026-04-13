@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>국가 탐색기</h1>
+  <h1>슬라이딩 퍼즐</h1>
   
   <p>
     로그인 기반 점수 경쟁형 슬라이딩 퍼즐 웹 애플리케이션입니다.
@@ -114,16 +114,40 @@
 # 1. 저장소 클론
 git clone https://github.com/Gyulo94/sliding-puzzle
 cd sliding-puzzle
+```
 
-# 2. 실행 (가장 편한 방법)
-# VS Code → Live Server 확장 프로그램 열기
-# 또는 index.html을 브라우저에서 직접 열기
+#### 1) 의존성 설치
+
+```bash
+npm install
+```
+
+#### 2) 개발 서버 실행
+
+```bash
+npm run dev
+```
+
+- 클라이언트: 기본 `http://localhost:5173`
+
+### 3) 프로덕션 빌드
+
+```bash
+npm run build
+```
+
+# 2. 실행
+
+```bash
 📂 파일 구조
-├── index.html # 메인 HTML
-├── js/
-│   ├── config.js # regionMap, subregionMap, capitalKorean, languageMap
-│   ├── utils.js # getKoreanCapital, getKoreanRegion, getKoreanLanguages, getSafeFlagUrl 등
-│   ├── map.js # Leaflet 관련 모든 함수 (initWorldMap, initMap, showCard 등)
-│   └── main.js # 데이터 로드, 이벤트, render 함수 등
-└── README.md
+├─ app/createPuzzleApp.js        # 게임 오케스트레이션
+├─ app/authController.js         # 인증 UI/세션 흐름
+├─ app/overlayController.js      # 오버레이 상태 제어
+├─ app/rankingController.js      # 랭킹 조회/페이지네이션/캐시
+├─ app/endPanelView.js           # 종료 요약/점수 상세 렌더링
+├─ game/engine.js                # 이동/승리/힌트 탐색
+├─ modules/scoring.js            # 점수 계산 규칙
+├─ modules/api.js                # API 통신
+├─ modules/dom.js                # 공통 DOM 참조 모음
+└─ ui/*                          # 보드/랭킹 렌더링
 ```
