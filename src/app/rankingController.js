@@ -90,7 +90,10 @@ export function createRankingController({
       return;
     }
 
-    if (endMyRankStatus.type === "value" && Number.isFinite(endMyRankStatus.rank)) {
+    if (
+      endMyRankStatus.type === "value" &&
+      Number.isFinite(endMyRankStatus.rank)
+    ) {
       dom.endMyRankEl.innerHTML = t("ranking.myBestRank.value", {
         rank: formatNumber(endMyRankStatus.rank),
       });
