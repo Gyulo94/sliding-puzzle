@@ -1,4 +1,5 @@
 export function updateBoardSize(dom) {
+  // 게임 영역 기준으로 보드/카드의 정사각형 크기를 동기화한다.
   const availWidth = dom.gameAreaEl.clientWidth * 0.98;
   const availHeight = dom.gameAreaEl.clientHeight * 0.98;
   const minBoardSize = window.innerWidth < 640 ? 150 : 220;
@@ -14,6 +15,7 @@ export function updateBoardSize(dom) {
 }
 
 export function renderBoard(dom, state, onTileClick) {
+  // 현재 상태 배열을 기준으로 타일 DOM을 전부 다시 구성한다.
   dom.boardEl.innerHTML = "";
 
   state.board.forEach((val, i) => {
@@ -28,7 +30,9 @@ export function renderBoard(dom, state, onTileClick) {
     tile.dataset.index = String(i);
     tile.style.transform = `translate3d(${x * state.tileSize}px, ${y * state.tileSize}px, 0)`;
 
-    if (val !== state.size * state.size - 1) {
+    const isEmptyTile = val === state.size * state.size - 1;
+
+    if (!isEmptyTile) {
       const imgX = val % state.size;
       const imgY = Math.floor(val / state.size);
 
@@ -52,6 +56,7 @@ export function renderBoard(dom, state, onTileClick) {
 }
 
 export function fillLastPiece(boardEl, imageSrc) {
+  // 퍼즐 완료 시 원본 이미지를 보드 전체에 표시한다.
   boardEl.innerHTML = "";
 
   const full = document.createElement("img");
@@ -65,6 +70,7 @@ export function fillLastPiece(boardEl, imageSrc) {
 }
 
 export function showConfetti() {
+  // 짧은 간격으로 여러 번의 폭죽을 순차 실행한다.
   const bursts = 4;
   for (let b = 0; b < bursts; b += 1) {
     setTimeout(() => createBurst(), b * 300);
@@ -72,6 +78,7 @@ export function showConfetti() {
 }
 
 function createBurst() {
+  // 한 번의 폭죽에서 다수의 색종이 조각을 방사형으로 생성한다.
   for (let i = 0; i < 80; i += 1) {
     const el = document.createElement("div");
     el.className = "confetti";

@@ -1,3 +1,7 @@
+// ====================== 1. 테마 정의 ======================
+/**
+ * 배경 그라디언트 클래스와 CSS 변수 세트를 포함한 테마 목록
+ */
 export const THEMES = [
   {
     gradient: ["from-amber-50", "via-orange-50", "to-rose-50"],
@@ -93,6 +97,12 @@ export const THEMES = [
   },
 ];
 
+// ====================== 2. 테마 적용/순환 ======================
+/**
+ * 선택한 인덱스의 테마를 body 요소에 적용하는 함수
+ * @param {HTMLElement} bodyEl
+ * @param {number} index
+ */
 export function applyTheme(bodyEl, index) {
   const gradients = THEMES.flatMap((theme) => theme.gradient);
   gradients.forEach((cls) => bodyEl.classList.remove(cls));
@@ -105,6 +115,11 @@ export function applyTheme(bodyEl, index) {
   });
 }
 
+/**
+ * 현재 테마 인덱스 기준 다음 테마 인덱스를 반환하는 함수
+ * @param {number} currentIndex
+ * @returns {number}
+ */
 export function getNextThemeIndex(currentIndex) {
   return (currentIndex + 1) % THEMES.length;
 }

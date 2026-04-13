@@ -1,5 +1,10 @@
+// ====================== 1. DOM 참조 맵 ======================
+/**
+ * 앱 전역에서 재사용하는 DOM 요소 참조 모음
+ */
 export const dom = {
   boardEl: document.getElementById("board"),
+  languageSelectEl: document.getElementById("languageSelect"),
   appRootEl: document.getElementById("appRoot"),
   authOverlayEl: document.getElementById("authOverlay"),
   difficultyOverlayEl: document.getElementById("difficultyOverlay"),

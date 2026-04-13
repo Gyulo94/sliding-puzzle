@@ -1,16 +1,24 @@
 import { api, isAxiosError } from "./axios";
+import { t } from "./i18n.js";
 
+// ====================== 1. 공통 에러 메시지 변환 ======================
+/**
+ * Axios 에러를 사용자 친화적인 메시지로 변환하는 함수
+ * @param {unknown} error
+ * @param {string} fallbackMessage
+ * @returns {string}
+ */
 function resolveErrorMessage(error, fallbackMessage) {
   if (isAxiosError(error)) {
     if (error.code === "ECONNABORTED") {
-      return "요청 시간이 초과됐습니다. 다시 시도해주세요";
+      return t("api.timeout");
     }
     if (!error.response) {
-      return "서버에 연결할 수 없습니다. 네트워크를 확인해주세요";
+      return t("api.networkError");
     }
     const data = error.response.data;
     if (!data || typeof data !== "object") {
-      return `서버 오류가 발생했습니다 (${error.response.status})`;
+      return t("api.serverError", { status: error.response.status });
     }
     return data.message || fallbackMessage;
   }
@@ -18,15 +26,27 @@ function resolveErrorMessage(error, fallbackMessage) {
   return fallbackMessage;
 }
 
+// ====================== 2. 인증 API ======================
+/**
+ * 로그인/회원가입 요청을 전송하는 함수
+ * @param {string} path
+ * @param {object} payload
+ * @returns {Promise<any>}
+ */
 export async function postAuth(path, payload) {
   try {
     const { data } = await api.post(path, payload);
     return data ?? {};
   } catch (error) {
-    throw new Error(resolveErrorMessage(error, "요청 처리에 실패했습니다"));
+    throw new Error(resolveErrorMessage(error, t("api.requestFailed")));
   }
 }
 
+/**
+ * 액세스 토큰으로 내 사용자 정보를 조회하는 함수
+ * @param {string} accessToken
+ * @returns {Promise<any>}
+ */
 export async function fetchMe(accessToken) {
   try {
     const { data } = await api.get("/api/me", {
@@ -36,19 +56,31 @@ export async function fetchMe(accessToken) {
     });
     return data ?? {};
   } catch (error) {
-    throw new Error(resolveErrorMessage(error, "인증 확인 실패"));
+    throw new Error(resolveErrorMessage(error, t("api.authCheckFailed")));
   }
 }
 
+// ====================== 3. 점수/랭킹 API ======================
+/**
+ * 게임 점수 기록을 서버에 저장하는 함수
+ * @param {object} payload
+ * @returns {Promise<any>}
+ */
 export async function submitScore(payload) {
   try {
     const { data } = await api.post("/api/scores", payload);
     return data ?? {};
   } catch (error) {
-    throw new Error(resolveErrorMessage(error, "점수 저장 실패"));
+    throw new Error(resolveErrorMessage(error, t("api.saveScoreFailed")));
   }
 }
 
+/**
+ * 난이도별 랭킹 목록과 메타데이터를 조회하는 함수
+ * @param {number} difficulty
+ * @param {object|number} [options={}]
+ * @returns {Promise<any>}
+ */
 export async function fetchRanking(difficulty, options = {}) {
   const normalizedOptions =
     typeof options === "number" ? { limit: options } : options;
@@ -69,6 +101,6 @@ export async function fetchRanking(difficulty, options = {}) {
     const { data } = await api.get(`/api/scores?${query.toString()}`);
     return data ?? {};
   } catch (error) {
-    throw new Error(resolveErrorMessage(error, "랭킹 불러오기 실패"));
+    throw new Error(resolveErrorMessage(error, t("api.loadRankingFailed")));
   }
 }

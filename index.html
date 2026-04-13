@@ -11,8 +11,21 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body
-    class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 h-[100dvh] overflow-hidden"
+    class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 h-[100dvh] overflow-x-hidden overflow-y-auto md:overflow-hidden"
   >
+    <div class="fixed right-3 top-3 z-[70] sm:right-4 sm:top-4">
+      <label for="languageSelect" class="sr-only" data-i18n="language.label"
+        >언어</label
+      >
+      <select
+        id="languageSelect"
+        class="rounded-xl border border-[var(--button-border)] bg-[var(--panel-bg)] px-3 py-2 text-sm font-semibold text-[var(--text-strong)] shadow-[var(--panel-shadow)] outline-none"
+      >
+        <option value="ko" data-i18n="language.ko">한국어</option>
+        <option value="es" data-i18n="language.es">Español</option>
+      </select>
+    </div>
+
     <div
       id="authOverlay"
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[linear-gradient(135deg,var(--app-bg-start),var(--app-bg-mid),var(--app-bg-end))]"
@@ -21,11 +34,13 @@
         class="w-full max-w-[420px] rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] p-5 shadow-[var(--panel-shadow)] sm:p-6"
       >
         <h1
+          data-i18n="auth.title"
           class="mb-2 text-center text-2xl font-extrabold text-[var(--text-strong)] sm:text-3xl"
         >
           슬라이딩 퍼즐
         </h1>
         <p
+          data-i18n="auth.subtitle"
           class="mb-5 text-center text-sm text-[var(--text-muted)] sm:text-base"
         >
           로그인 후 게임을 시작하세요
@@ -35,6 +50,7 @@
           <input
             id="loginId"
             type="text"
+            data-i18n-placeholder="auth.placeholder.id"
             placeholder="아이디"
             class="h-12 w-full rounded-[14px] border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-[14px] text-[var(--text-strong)] outline-none focus:border-[var(--button-border)] focus:shadow-[0_0_0_3px_rgba(251,191,36,0.25)]"
             required
@@ -42,12 +58,14 @@
           <input
             id="loginPw"
             type="password"
+            data-i18n-placeholder="auth.placeholder.password"
             placeholder="비밀번호"
             class="h-12 w-full rounded-[14px] border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-[14px] text-[var(--text-strong)] outline-none focus:border-[var(--button-border)] focus:shadow-[0_0_0_3px_rgba(251,191,36,0.25)]"
             required
           />
           <button
             type="submit"
+            data-i18n="auth.login"
             class="mt-1 h-12 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] font-extrabold text-[var(--button-text)]"
           >
             로그인
@@ -55,6 +73,7 @@
           <button
             id="goSignup"
             type="button"
+            data-i18n="auth.goSignup"
             class="w-full border-0 bg-transparent text-sm text-[var(--text-muted)] underline"
           >
             회원가입
@@ -65,6 +84,7 @@
           <input
             id="signupId"
             type="text"
+            data-i18n-placeholder="auth.placeholder.id"
             placeholder="아이디"
             class="h-12 w-full rounded-[14px] border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-[14px] text-[var(--text-strong)] outline-none focus:border-[var(--button-border)] focus:shadow-[0_0_0_3px_rgba(251,191,36,0.25)]"
             required
@@ -72,6 +92,7 @@
           <input
             id="signupName"
             type="text"
+            data-i18n-placeholder="auth.placeholder.name"
             placeholder="이름"
             class="h-12 w-full rounded-[14px] border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-[14px] text-[var(--text-strong)] outline-none focus:border-[var(--button-border)] focus:shadow-[0_0_0_3px_rgba(251,191,36,0.25)]"
             required
@@ -79,12 +100,14 @@
           <input
             id="signupPw"
             type="password"
+            data-i18n-placeholder="auth.placeholder.password"
             placeholder="비밀번호"
             class="h-12 w-full rounded-[14px] border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-[14px] text-[var(--text-strong)] outline-none focus:border-[var(--button-border)] focus:shadow-[0_0_0_3px_rgba(251,191,36,0.25)]"
             required
           />
           <button
             type="submit"
+            data-i18n="auth.signup"
             class="mt-1 h-12 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] font-extrabold text-[var(--button-text)]"
           >
             회원가입
@@ -92,6 +115,7 @@
           <button
             id="goLogin"
             type="button"
+            data-i18n="auth.goLogin"
             class="w-full border-0 bg-transparent text-sm text-[var(--text-muted)] underline"
           >
             로그인 화면으로
@@ -113,11 +137,13 @@
         class="w-full max-w-[460px] rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] p-6 shadow-[var(--panel-shadow)] sm:p-7"
       >
         <h2
+          data-i18n="difficulty.title"
           class="text-center text-2xl font-extrabold text-[var(--text-strong)] sm:text-3xl"
         >
           난이도 선택
         </h2>
         <p
+          data-i18n="difficulty.subtitle"
           class="mt-2 mb-5 text-center text-sm text-[var(--text-muted)] sm:text-base"
         >
           원하는 난이도로 게임을 시작하세요
@@ -125,6 +151,7 @@
         <div class="flex flex-col gap-3">
           <button
             type="button"
+            data-i18n-difficulty-option="3"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
             data-size="3"
           >
@@ -132,6 +159,7 @@
           </button>
           <button
             type="button"
+            data-i18n-difficulty-option="4"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
             data-size="4"
           >
@@ -139,6 +167,7 @@
           </button>
           <button
             type="button"
+            data-i18n-difficulty-option="5"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
             data-size="5"
           >
@@ -156,11 +185,13 @@
         class="w-full max-w-[520px] rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] p-6 shadow-[var(--panel-shadow)] sm:p-7"
       >
         <h2
+          data-i18n="imageMode.title"
           class="text-center text-2xl font-extrabold text-[var(--text-strong)] sm:text-3xl"
         >
           이미지 선택 방식
         </h2>
         <p
+          data-i18n="imageMode.subtitle"
           class="mt-2 mb-5 text-center text-sm text-[var(--text-muted)] sm:text-base"
         >
           원하는 방식을 선택하세요
@@ -169,6 +200,7 @@
           <button
             id="chooseUploadBtn"
             type="button"
+            data-i18n="imageMode.upload"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
           >
             이미지 업로드
@@ -176,6 +208,7 @@
           <button
             id="chooseRandomBtn"
             type="button"
+            data-i18n="imageMode.random"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
           >
             랜덤 이미지 선택
@@ -183,6 +216,7 @@
           <button
             id="chooseDifficultyAgainBtn"
             type="button"
+            data-i18n="imageMode.chooseDifficultyAgain"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
           >
             난이도 다시 선택
@@ -199,12 +233,14 @@
         class="w-full max-w-[520px] rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] p-6 shadow-[var(--panel-shadow)] sm:p-7"
       >
         <h2
+          data-i18n="end.title"
           class="text-center text-2xl font-extrabold text-[var(--text-strong)] sm:text-3xl"
         >
           게임 완료
         </h2>
         <p
           id="endMyRank"
+          data-i18n-html="end.myRank.default"
           class="mt-2 text-center text-sm text-[var(--text-muted)] sm:text-base"
         >
           내 순위: -
@@ -212,6 +248,7 @@
 
         <p
           id="endSummary"
+          data-i18n-html="end.summary.default"
           class="mt-2 mb-4 text-center text-sm text-[var(--text-muted)] sm:text-base"
         >
           내 점수: 0점
@@ -223,7 +260,9 @@
           <div
             class="end-score-item flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]"
+            <span
+              data-i18n="end.field.difficulty"
+              class="text-xs font-bold text-[var(--text-muted)]"
               >난이도</span
             >
             <span
@@ -235,7 +274,11 @@
           <div
             class="end-score-item flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]">시간</span>
+            <span
+              data-i18n="end.field.time"
+              class="text-xs font-bold text-[var(--text-muted)]"
+              >시간</span
+            >
             <span
               id="endTime"
               class="text-[13px] font-black text-[var(--text-strong)]"
@@ -245,7 +288,9 @@
           <div
             class="end-score-item flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]"
+            <span
+              data-i18n="end.field.moves"
+              class="text-xs font-bold text-[var(--text-muted)]"
               >이동 횟수</span
             >
             <span
@@ -257,7 +302,9 @@
           <div
             class="end-score-item flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]"
+            <span
+              data-i18n="end.field.bonus"
+              class="text-xs font-bold text-[var(--text-muted)]"
               >가산점</span
             >
             <span
@@ -269,7 +316,9 @@
           <div
             class="end-score-item flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]"
+            <span
+              data-i18n="end.field.penalty"
+              class="text-xs font-bold text-[var(--text-muted)]"
               >총 감점</span
             >
             <span
@@ -281,7 +330,9 @@
           <div
             class="end-score-item flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]"
+            <span
+              data-i18n="end.field.hints"
+              class="text-xs font-bold text-[var(--text-muted)]"
               >힌트 사용</span
             >
             <span
@@ -293,7 +344,9 @@
           <div
             class="end-score-item col-span-2 flex cursor-help items-center justify-between gap-2 rounded-[10px] border border-[color:color-mix(in_oklab,var(--subcard-border)_70%,white)] px-[10px] py-2"
           >
-            <span class="text-xs font-bold text-[var(--text-muted)]"
+            <span
+              data-i18n="end.field.final"
+              class="text-xs font-bold text-[var(--text-muted)]"
               >최종점수</span
             >
             <span
@@ -308,6 +361,7 @@
           <button
             id="endSelectDifficultyBtn"
             type="button"
+            data-i18n="end.selectDifficulty"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
           >
             난이도 선택
@@ -315,6 +369,7 @@
           <button
             id="endViewRankingBtn"
             type="button"
+            data-i18n="end.viewRanking"
             class="difficulty-btn h-14 w-full rounded-[14px] border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-base font-extrabold text-[var(--button-text)] transition-transform duration-150 hover:-translate-y-px active:scale-[0.98]"
           >
             랭킹 보기
@@ -333,7 +388,10 @@
         <div
           class="h-12 w-12 animate-spin rounded-full border-4 border-[var(--subcard-border)] border-t-[var(--button-border)]"
         ></div>
-        <p class="text-base font-bold text-[var(--text-strong)]">
+        <p
+          data-i18n="loading.scoring"
+          class="text-base font-bold text-[var(--text-strong)]"
+        >
           점수 계산 중...
         </p>
       </div>
@@ -341,13 +399,13 @@
 
     <main
       id="appRoot"
-      class="h-full w-full max-w-[1200px] mx-auto px-3 sm:px-6 py-3 sm:py-5 flex flex-col gap-3 sm:gap-4"
+      class="h-full w-full max-w-[1200px] mx-auto px-3 sm:px-5 md:px-4 lg:px-6 py-2 sm:py-3 md:py-2 lg:py-4 flex flex-col gap-2 sm:gap-3 md:gap-2 lg:gap-4"
     >
       <header
         id="topCard"
-        class="mx-auto shrink-0 rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] px-3 py-4 shadow-[var(--panel-shadow)] backdrop-blur-md sm:px-5 sm:py-5"
+        class="mx-auto shrink-0 rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] px-3 py-3 md:py-2 lg:py-4 shadow-[var(--panel-shadow)] backdrop-blur-md sm:px-4 md:px-4 lg:px-5"
       >
-        <div class="flex justify-center mb-3 sm:mb-4">
+        <div class="flex justify-center mb-2 sm:mb-3 md:mb-2">
           <div
             id="sizeChip"
             class="rounded-2xl border border-[var(--subcard-border)] bg-[var(--subcard-bg)] px-5 py-2 shadow-sm"
@@ -360,33 +418,35 @@
             </p>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-2 sm:gap-3">
           <div
-            class="text-center rounded-2xl border border-[var(--subcard-border)] bg-[var(--subcard-bg)] py-4 sm:py-4"
+            class="text-center rounded-2xl border border-[var(--subcard-border)] bg-[var(--subcard-bg)] py-3 sm:py-3 md:py-2"
           >
             <p
+              data-i18n="stats.time"
               class="text-[clamp(1rem,4.8vw,1.25rem)] font-semibold text-[var(--text-muted)]"
             >
               시간
             </p>
             <p
               id="timeValue"
-              class="mt-2 text-[clamp(2.3rem,9.4vw,3.4rem)] font-black leading-none text-[var(--text-strong)]"
+              class="mt-2 md:mt-1 text-[clamp(2.1rem,8.4vw,3.1rem)] md:text-[clamp(1.8rem,5.5vw,2.4rem)] font-black leading-none text-[var(--text-strong)]"
             >
               00:00
             </p>
           </div>
           <div
-            class="text-center rounded-2xl border border-[var(--subcard-border)] bg-[var(--subcard-bg)] py-4 sm:py-4"
+            class="text-center rounded-2xl border border-[var(--subcard-border)] bg-[var(--subcard-bg)] py-3 sm:py-3 md:py-2"
           >
             <p
+              data-i18n="stats.moves"
               class="text-[clamp(1rem,4.8vw,1.25rem)] font-semibold text-[var(--text-muted)]"
             >
               이동
             </p>
             <p
               id="moveCount"
-              class="mt-2 text-[clamp(2.3rem,9.4vw,3.4rem)] font-black leading-none text-[var(--text-strong)]"
+              class="mt-2 md:mt-1 text-[clamp(2.1rem,8.4vw,3.1rem)] md:text-[clamp(1.8rem,5.5vw,2.4rem)] font-black leading-none text-[var(--text-strong)]"
             >
               0
             </p>
@@ -396,7 +456,7 @@
 
       <section
         id="game-area"
-        class="flex-1 min-h-0 flex items-center justify-center"
+        class="flex-1 min-h-[180px] sm:min-h-[200px] md:min-h-[220px] flex items-center justify-center"
       >
         <div
           id="board"
@@ -406,15 +466,19 @@
 
       <footer
         id="bottomCard"
-        class="mx-auto shrink-0 rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[var(--panel-shadow)] backdrop-blur-md sm:py-4"
+        class="mx-auto shrink-0 rounded-3xl border border-[var(--panel-border)] bg-[var(--panel-bg)] px-3 sm:px-4 pt-2 sm:pt-3 md:pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-[max(0.9rem,env(safe-area-inset-bottom))] shadow-[var(--panel-shadow)] backdrop-blur-md"
       >
-        <div class="flex items-center justify-center gap-5 sm:gap-4">
+        <div
+          class="flex items-center justify-center gap-3 sm:gap-3 md:gap-2 lg:gap-4"
+        >
           <button
             id="backBtn"
             type="button"
+            data-i18n-title="controls.back"
+            data-i18n-aria="controls.back"
             title="뒤로가기"
             aria-label="뒤로가기"
-            class="icon-btn grid h-[74px] w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96] sm:h-[76px] sm:w-[76px]"
+            class="icon-btn grid h-[66px] w-[66px] sm:h-[68px] sm:w-[68px] md:h-[62px] md:w-[62px] lg:h-[74px] lg:w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96]"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
               <path
@@ -430,9 +494,11 @@
           <button
             id="themeBtn"
             type="button"
+            data-i18n-title="controls.theme"
+            data-i18n-aria="controls.theme"
             title="테마 변경"
             aria-label="테마 변경"
-            class="icon-btn grid h-[74px] w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96] sm:h-[76px] sm:w-[76px]"
+            class="icon-btn grid h-[66px] w-[66px] sm:h-[68px] sm:w-[68px] md:h-[62px] md:w-[62px] lg:h-[74px] lg:w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96]"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
               <path
@@ -451,9 +517,11 @@
           <button
             id="restartBtn"
             type="button"
+            data-i18n-title="controls.restart"
+            data-i18n-aria="controls.restart"
             title="다시시작"
             aria-label="다시시작"
-            class="icon-btn grid h-[74px] w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96] sm:h-[76px] sm:w-[76px]"
+            class="icon-btn grid h-[66px] w-[66px] sm:h-[68px] sm:w-[68px] md:h-[62px] md:w-[62px] lg:h-[74px] lg:w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96]"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
               <path
@@ -469,9 +537,11 @@
           <button
             id="hintBtn"
             type="button"
+            data-i18n-title="controls.hint"
+            data-i18n-aria="controls.hint"
             title="힌트"
             aria-label="힌트"
-            class="icon-btn grid h-[74px] w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96] sm:h-[76px] sm:w-[76px]"
+            class="icon-btn grid h-[66px] w-[66px] sm:h-[68px] sm:w-[68px] md:h-[62px] md:w-[62px] lg:h-[74px] lg:w-[74px] flex-none place-items-center rounded-full border-2 border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] text-[var(--button-text)] shadow-[var(--button-shadow)] transition-transform duration-150 hover:-translate-y-px hover:shadow-[0_10px_18px_rgba(122,76,31,0.24)] active:scale-[0.96]"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6">
               <path
@@ -497,6 +567,7 @@
         >
           <div class="flex items-center justify-between gap-3 mb-3">
             <h2
+              data-i18n="ranking.title"
               class="text-lg font-extrabold text-[var(--text-strong)] sm:text-xl"
             >
               랭킹
@@ -505,6 +576,8 @@
               <button
                 id="refreshRankingBtn"
                 type="button"
+                data-i18n="ranking.refresh"
+                data-i18n-aria="ranking.refresh"
                 class="rounded-[10px] border border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] px-[10px] py-[6px] text-[13px] font-bold text-[var(--text-strong)]"
                 aria-label="랭킹 새로고침"
               >
@@ -513,6 +586,8 @@
               <button
                 id="backToEndPanelBtn"
                 type="button"
+                data-i18n="ranking.scorePanel"
+                data-i18n-aria="ranking.scorePanel"
                 class="rounded-[10px] border border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] px-[10px] py-[6px] text-[13px] font-bold text-[var(--text-strong)]"
                 aria-label="점수패널로 돌아가기"
               >
@@ -521,16 +596,25 @@
             </div>
           </div>
           <div class="flex items-center gap-2 mb-3">
-            <label for="rankingDifficulty" class="text-[var(--text-strong)]"
+            <label
+              data-i18n="ranking.difficulty"
+              for="rankingDifficulty"
+              class="text-[var(--text-strong)]"
               >난이도</label
             >
             <select
               id="rankingDifficulty"
               class="rounded-xl border border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] px-2 py-1 text-sm font-semibold text-[var(--button-text)]"
             >
-              <option value="3">초급 (3x3)</option>
-              <option value="4" selected>중급 (4x4)</option>
-              <option value="5">고급 (5x5)</option>
+              <option value="3" data-i18n-difficulty-option="3">
+                초급 (3x3)
+              </option>
+              <option value="4" selected data-i18n-difficulty-option="4">
+                중급 (4x4)
+              </option>
+              <option value="5" data-i18n-difficulty-option="5">
+                고급 (5x5)
+              </option>
             </select>
           </div>
           <div id="rankingList" class="flex flex-col gap-2"></div>
@@ -538,6 +622,8 @@
             <button
               id="rankingPrevBtn"
               type="button"
+              data-i18n="ranking.prev"
+              data-i18n-aria="ranking.prev"
               class="rounded-[10px] border border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] px-[10px] py-[6px] text-[13px] font-bold text-[var(--text-strong)]"
               aria-label="이전 페이지"
             >
@@ -552,6 +638,8 @@
             <button
               id="rankingNextBtn"
               type="button"
+              data-i18n="ranking.next"
+              data-i18n-aria="ranking.next"
               class="rounded-[10px] border border-[var(--button-border)] bg-[linear-gradient(180deg,var(--button-bg-start),var(--button-bg-end))] px-[10px] py-[6px] text-[13px] font-bold text-[var(--text-strong)]"
               aria-label="다음 페이지"
             >

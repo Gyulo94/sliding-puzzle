@@ -1,3 +1,5 @@
+import { formatNumber, t } from "../modules/i18n.js";
+
 export function renderTop5Into(
   containerEl,
   items,
@@ -10,7 +12,7 @@ export function renderTop5Into(
   if (!items || items.length === 0) {
     const empty = document.createElement("div");
     empty.className = "py-[18px] text-center text-[var(--text-muted)]";
-    empty.textContent = "등록된 기록이 없습니다.";
+    empty.textContent = t("ranking.empty");
     containerEl.appendChild(empty);
     return;
   }
@@ -37,11 +39,17 @@ export function renderTop5Into(
 
     const meta = document.createElement("div");
     meta.className = "mt-[2px] text-xs text-[var(--text-muted)]";
-    meta.textContent = `시간 ${formatTime(row.time_seconds)} / 이동 ${row.moves} / 힌트 ${row.hints}`;
+    meta.textContent = t("ranking.meta", {
+      time: formatTime(row.time_seconds),
+      moves: formatNumber(row.moves),
+      hints: formatNumber(row.hints),
+    });
 
     const scoreEl = document.createElement("div");
     scoreEl.className = "text-[var(--text-strong)]";
-    scoreEl.textContent = `${row.score}점`;
+    scoreEl.textContent = t("ranking.score", {
+      score: formatNumber(row.score),
+    });
 
     info.appendChild(title);
     info.appendChild(meta);
